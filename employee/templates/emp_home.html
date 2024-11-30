@@ -1,0 +1,21 @@
+{% extends 'emp_base.html' %}
+
+{% block main %}
+
+<h4 class="p-2" style="border-bottom: 2px solid rgb(11, 14, 151); color: rgb(11, 14, 151);">Employee Dashboard</h4>
+
+<div class="row text-white">
+    <div class="col-sm-12 p-2">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="text-success">Welcome Back To ERMS</h4>
+                <h5 class="text-capitalize" style="color: rgb(11, 14, 151);">{{request.user.first_name}} {{request.user.last_name}}</h5>
+                <p class="text-justify p-3" style="color: black;">
+                    Efficiently manage and streamline your employee records with ERMS (Employee Record Management System). Designed to simplify HR processes, ERMS provides a comprehensive platform to securely store, organize, and access employee data with ease. From managing personal details to tracking performance and attendance, ERMS ensures your organization's workforce data is always at your fingertips. Say goodbye to manual paperwork and experience the power of seamless employee management with ERMS!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
