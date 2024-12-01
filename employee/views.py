@@ -32,6 +32,18 @@ def Logout(request):
     logout(request)
     return redirect('index')
 
+def my_experience(request):
+    if not request.user.is_authenticated:
+        return redirect('emp_login')
+
+    user = request.user
+    experience = EmployeeExperience.objects.get(user = user)
+
+    return render(request, 'my_experience.html', locals())
+
+def admin_login(request):
+    return render(request, 'admin_login.html')
+
 def registration(request):
     error = ""
     if request.method == "POST":
@@ -44,6 +56,8 @@ def registration(request):
         try:
             user = User.objects.create_user(first_name = fn, last_name = ln, username = em, password = pwd)
             EmployeeDetail.objects.create(user = user, empcode = ec)
+            EmployeeExperience.objects.create(user = user)
+            EmployeeEducation.objects.create(user = user)
             error = "no"
 
         except:
@@ -90,3 +104,38 @@ def profile(request):
             error = "yes"
 
     return render(request, 'profile.html', locals())
+
+def edit_experience(request):
+    if not request.user.is_authenticated:
+        return redirect('emp_login')
+    
+    error = ""
+    user = request.user
+    experience = EmployeeExperience.objects.get(user = user)
+
+    if request.method == "POST":
+        # fn = request.POST['firstname']
+        # ln = request.POST['lastname']
+        ec = request.POST['empcode']
+        dept = request.POST['department']
+        designation = request.POST['designation']
+        contact = request.POST['contact']
+        jdate = request.POST['jdate']
+        gender = request.POST['gender']
+
+        # experience.user.first_name = fn
+        # experience.user.last_name = ln
+        experience.empcode = ec
+        experience.empdept = dept
+        experience.designation = designation
+        experience.contact = contact
+        experience.gender = gender
+
+        try:
+            experience.save()
+            error = "no"
+
+        except:
+            error = "yes"
+
+    return render(request, 'edit_experience.html', locals())
